@@ -1,0 +1,8 @@
+arreglar el css en general
+formulario de creacion de contenido (podría mejorarse, pero ok)
+footer (terminado?)
+header (icono quizás?)
+paginación (hecha, pero podría mejorarse, como cuando hay 1000 páginas)
+usuarios y comentarios
+acondicionar página de item, poner carrusel
+acondicionar tarjetas

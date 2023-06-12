@@ -1,0 +1,11 @@
+{% extends 'layouts/layout.html' %}
+
+{% block content %}
+<div id="form">
+	<form action="" enctype='multipart/form-data' method='POST'>
+		{% csrf_token %}
+		{{ item_form.as_p }}
+		<input type="submit" value="Crear item" />
+	</form>
+</div>
+{% endblock %}

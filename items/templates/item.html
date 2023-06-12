@@ -1,0 +1,56 @@
+{% extends 'layouts/layout.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+	<article id="single-item">
+		<h2 id="item-title">{{ item.name }}</h2>
+		<div id="carousel-images" class="carousel slide" data-bs-ride="carousel">
+			<div class="carousel-inner">
+			{% for image in images %}
+				<div class="carousel-item {% if forloop.counter0 == 0 %}active{% endif %}" data-interval="100">
+					<img class="article-image" src="{{ image.image.url }}" alt="image">
+				</div>
+			{% endfor %}
+			</div>
+		</div>
+
+		<div id="item-content">
+			<h3>Descripción del contenido</h3>
+			<p id="item-description">{{ item.description }}</p>
+		</div>
+		{% if files %}
+		<div id="item-links">
+			<h3>Links</h3>
+			<ul id="links">
+			{% for file in files %}
+				<li id="link"><a href="{{ file.filename.url }}" download>Link {{ forloop.counter }}</a></li>
+			{% endfor %}
+			</ul>
+		</div>
+		{% endif %}
+		{% if user.is_authenticated %}
+		<div id="comment">
+			<h2 id="comentarios">Comentarios</h2>
+			<form method="POST" action="/comment/{{ item.id }}/{{user.id}}">
+				{% csrf_token %}
+				<textarea id="comment-box" name="content" maxlength="255" rows="2" cols="60" placeholder="Deja tu comentario"></textarea>
+				<div class="clearfix"></div>
+				<input type="submit" value="Comentar">
+			</form>
+		{% else %}
+			<p>Tienes que estar registrado para comentar</p>
+		{% endif %}
+		</div>
+		
+		{% for commentary in commentaries %}
+		<div class="commentary">
+			<div class="commentary-box">
+				<span class="commentary-text">{{ commentary.content }}</span>
+			</div>
+			<div class="clearfix"></div>
+			<span>Comentado por <strong>{{ commentary.user.username }}</strong> - {{ commentary.created_at|naturaltime }}{% if commentary.created_at != commentary.updated_at %} - Editado{% endif %}</span>
+		</div>
+		{% endfor %}
+	</article>
+{% endblock %}
